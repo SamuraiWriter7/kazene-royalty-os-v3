@@ -1,7 +1,6 @@
-# kazene-royalty-os-v3
-kazene-royalty-os-v3 is an open specification for a royalty-processing OS that converts AI access to creative works into a governed cycle of **permission, trace, and allocation**.
-
 # 印税OS v3.0 Core Specification
+
+**kazene-royalty-os-v3** is an open specification for a royalty-processing OS that converts AI access to creative works into a governed cycle of **permission, trace, and allocation**.
 
 印税OS v3.0 は、AIによる著作物アクセスを  
 **許諾・ログ・分配** の正規循環へ変換するための権利処理OS仕様です。
@@ -27,6 +26,34 @@ AIを利用者または契約主体の **代理エージェント** として扱
 将来的な実装・共同研究・制度設計・事業連携のための参照点となることを目的としています。
 
 ---
+
+## Repository Structure
+
+- `spec/` : 印税OS v3.0 のコア仕様（YAML）
+- `schema/` : コア仕様を検証するための JSON Schema
+- `examples/` : サンプルトレースログと分配レポート
+- `README.md` : 概要、設計思想、基本原則
+- `CONTRIBUTING.md` : 改善提案・参加方法のガイド
+- `LICENSE` : ライセンス情報
+
+## Start Here
+
+このリポジトリを初めて読む場合は、次の順番がおすすめです。
+
+1. `README.md`  
+   まず全体像と基本思想を確認します。
+
+2. `spec/royalty-os-v3.0-core-spec.yaml`  
+   次に、印税OS v3.0 のコア仕様を機械可読な形で見ます。
+
+3. `schema/royalty-os-v3.0-core.schema.json`  
+   仕様の検証ルールと構造を確認します。
+
+4. `examples/sample-trace-log.yaml`  
+   実際にどのようなログが記録されるかを見ます。
+
+5. `examples/sample-allocation-report.yaml`  
+   ログがどのように分配レポートへつながるかを確認します。
 
 ## 目的
 
