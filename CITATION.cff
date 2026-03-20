@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: "印税OS v3.0 Core Specification"
+message: "If you use, reference, or build upon this specification, please cite this repository."
+type: software
+
+authors:
+  - family-names: "SamuraiWriter7"
+    given-names: ""
+    alias: "風の戦士"
+    orcid: ""
+
+repository-code: "https://github.com/SamuraiWriter7/kazene-royalty-os-v3"
+url: "https://github.com/SamuraiWriter7/kazene-royalty-os-v3"
+
+abstract: >
+  印税OS v3.0 Core Specification は、AIによる著作物アクセスを
+  許諾・ログ・分配の正規循環へ変換するための権利処理OS仕様である。
+  本仕様は、Qコインを非換金・非譲渡・内部会計単位として定義し、
+  AIを利用者または契約主体の代理エージェントとして扱うことで、
+  透明性・権利者保護・対価還元を両立する最小構造を提示する。
+
+keywords:
+  - "royalty os"
+  - "ai governance"
+  - "creator compensation"
+  - "copyright"
+  - "ai licensing"
+  - "traceability"
+  - "allocation"
+  - "digital rights"
+  - "kazene"
+
+license: "MIT"
+version: "3.0"
+date-released: "2026-03-21"
+
+preferred-citation:
+  type: software
+  title: "印税OS v3.0 Core Specification"
+  authors:
+    - family-names: "SamuraiWriter7"
+      given-names: ""
+      alias: "風の戦士"
+  version: "3.0"
+  date-released: "2026-03-21"
+  repository-code: "https://github.com/SamuraiWriter7/kazene-royalty-os-v3"
+  url: "https://github.com/SamuraiWriter7/kazene-royalty-os-v3"
