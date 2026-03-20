@@ -1,0 +1,610 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schema/royalty-os-v3.0-core.schema.json",
+  "title": "印税OS v3.0 Core Specification Schema",
+  "description": "JSON Schema for Royalty OS v3.0 Core Specification",
+  "type": "object",
+  "required": ["KazeneRoyaltyOS"],
+  "additionalProperties": false,
+  "properties": {
+    "KazeneRoyaltyOS": {
+      "$ref": "#/$defs/KazeneRoyaltyOS"
+    }
+  },
+  "$defs": {
+    "KazeneRoyaltyOS": {
+      "type": "object",
+      "required": [
+        "version",
+        "status",
+        "metadata",
+        "compliance",
+        "principles",
+        "actors",
+        "layers",
+        "work_model",
+        "safety",
+        "prototype_scope",
+        "roadmap"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$"
+        },
+        "status": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "compliance": {
+          "$ref": "#/$defs/Compliance"
+        },
+        "principles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Principle"
+          }
+        },
+        "actors": {
+          "$ref": "#/$defs/Actors"
+        },
+        "layers": {
+          "$ref": "#/$defs/Layers"
+        },
+        "work_model": {
+          "$ref": "#/$defs/WorkModel"
+        },
+        "safety": {
+          "$ref": "#/$defs/Safety"
+        },
+        "prototype_scope": {
+          "$ref": "#/$defs/PrototypeScope"
+        },
+        "roadmap": {
+          "$ref": "#/$defs/Roadmap"
+        }
+      }
+    },
+
+    "Metadata": {
+      "type": "object",
+      "required": ["name", "subtitle", "purpose", "design_policy"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "design_policy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "Compliance": {
+      "type": "object",
+      "required": ["japan", "eu"],
+      "additionalProperties": false,
+      "properties": {
+        "japan": {
+          "$ref": "#/$defs/JapanCompliance"
+        },
+        "eu": {
+          "$ref": "#/$defs/EUCompliance"
+        }
+      }
+    },
+
+    "JapanCompliance": {
+      "type": "object",
+      "required": ["financial", "copyright"],
+      "additionalProperties": false,
+      "properties": {
+        "financial": {
+          "$ref": "#/$defs/PolicyNoteSection"
+        },
+        "copyright": {
+          "$ref": "#/$defs/PolicyNoteSection"
+        }
+      }
+    },
+
+    "EUCompliance": {
+      "type": "object",
+      "required": ["ai_act"],
+      "additionalProperties": false,
+      "properties": {
+        "ai_act": {
+          "$ref": "#/$defs/PolicyNoteSection"
+        }
+      }
+    },
+
+    "PolicyNoteSection": {
+      "type": "object",
+      "required": ["policy", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "policy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+
+    "Principle": {
+      "type": "object",
+      "required": ["id", "title", "desc"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        }
+      }
+    },
+
+    "Actors": {
+      "type": "object",
+      "required": ["author", "publisher", "principal_user", "agent_proxy"],
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/Actor"
+        },
+        "publisher": {
+          "$ref": "#/$defs/Actor"
+        },
+        "principal_user": {
+          "$ref": "#/$defs/Actor"
+        },
+        "agent_proxy": {
+          "$ref": "#/$defs/ActorWithRestriction"
+        }
+      }
+    },
+
+    "Actor": {
+      "type": "object",
+      "required": ["role"],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "ActorWithRestriction": {
+      "type": "object",
+      "required": ["role", "restriction"],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "restriction": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "Layers": {
+      "type": "object",
+      "required": ["access", "trace", "royalty"],
+      "additionalProperties": false,
+      "properties": {
+        "access": {
+          "$ref": "#/$defs/AccessLayer"
+        },
+        "trace": {
+          "$ref": "#/$defs/TraceLayer"
+        },
+        "royalty": {
+          "$ref": "#/$defs/RoyaltyLayer"
+        }
+      }
+    },
+
+    "AccessLayer": {
+      "type": "object",
+      "required": ["description", "permissions", "scope_control"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "object",
+          "required": [
+            "view",
+            "summarize",
+            "quote",
+            "embed",
+            "external_response",
+            "retraining"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "view": { "$ref": "#/$defs/Permission" },
+            "summarize": { "$ref": "#/$defs/Permission" },
+            "quote": { "$ref": "#/$defs/Permission" },
+            "embed": { "$ref": "#/$defs/Permission" },
+            "external_response": { "$ref": "#/$defs/Permission" },
+            "retraining": { "$ref": "#/$defs/NullablePermission" }
+          }
+        },
+        "scope_control": {
+          "$ref": "#/$defs/ScopeControl"
+        }
+      }
+    },
+
+    "Permission": {
+      "type": "object",
+      "required": ["enabled", "coeff"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "coeff": {
+          "type": "number"
+        }
+      }
+    },
+
+    "NullablePermission": {
+      "type": "object",
+      "required": ["enabled", "coeff"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "coeff": {
+          "type": ["number", "null"]
+        }
+      }
+    },
+
+    "ScopeControl": {
+      "type": "object",
+      "required": ["unit", "flags"],
+      "additionalProperties": false,
+      "properties": {
+        "unit": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["work", "publisher", "contract"]
+          }
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "commercial_use",
+              "noncommercial_use",
+              "archive_only",
+              "reference_only"
+            ]
+          }
+        }
+      }
+    },
+
+    "TraceLayer": {
+      "type": "object",
+      "required": ["description", "required_fields", "result_use_type", "retention", "audit"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "required_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "result_use_type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "internal_reference",
+              "external_response",
+              "analytics"
+            ]
+          }
+        },
+        "retention": {
+          "$ref": "#/$defs/Retention"
+        },
+        "audit": {
+          "$ref": "#/$defs/Audit"
+        }
+      }
+    },
+
+    "Retention": {
+      "type": "object",
+      "required": ["policy"],
+      "additionalProperties": false,
+      "properties": {
+        "policy": {
+          "type": "string"
+        }
+      }
+    },
+
+    "Audit": {
+      "type": "object",
+      "required": ["enabled", "exportable"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "exportable": {
+          "type": "boolean"
+        }
+      }
+    },
+
+    "RoyaltyLayer": {
+      "type": "object",
+      "required": ["description", "qcoin", "calculation", "settlement"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "qcoin": {
+          "$ref": "#/$defs/QCoin"
+        },
+        "calculation": {
+          "$ref": "#/$defs/Calculation"
+        },
+        "settlement": {
+          "$ref": "#/$defs/Settlement"
+        }
+      }
+    },
+
+    "QCoin": {
+      "type": "object",
+      "required": ["name", "type", "properties"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "properties": {
+          "$ref": "#/$defs/QCoinProperties"
+        }
+      }
+    },
+
+    "QCoinProperties": {
+      "type": "object",
+      "required": [
+        "exchangeable_to_fiat",
+        "transferable_between_users",
+        "external_wallet_supported",
+        "market_tradable",
+        "redeemable_as_asset"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "exchangeable_to_fiat": {
+          "type": "boolean"
+        },
+        "transferable_between_users": {
+          "type": "boolean"
+        },
+        "external_wallet_supported": {
+          "type": "boolean"
+        },
+        "market_tradable": {
+          "type": "boolean"
+        },
+        "redeemable_as_asset": {
+          "type": "boolean"
+        }
+      }
+    },
+
+    "Calculation": {
+      "type": "object",
+      "required": ["base_formula", "defaults"],
+      "additionalProperties": false,
+      "properties": {
+        "base_formula": {
+          "type": "string"
+        },
+        "defaults": {
+          "$ref": "#/$defs/CalculationDefaults"
+        }
+      }
+    },
+
+    "CalculationDefaults": {
+      "type": "object",
+      "required": ["base_rate", "work_coeff", "usage_scope_coeff"],
+      "additionalProperties": false,
+      "properties": {
+        "base_rate": {
+          "type": "number"
+        },
+        "work_coeff": {
+          "type": "number"
+        },
+        "usage_scope_coeff": {
+          "type": "number"
+        }
+      }
+    },
+
+    "Settlement": {
+      "type": "object",
+      "required": ["monthly_formula", "payout_method", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "monthly_formula": {
+          "type": "string"
+        },
+        "payout_method": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+
+    "WorkModel": {
+      "type": "object",
+      "required": ["required_metadata", "license_profile"],
+      "additionalProperties": false,
+      "properties": {
+        "required_metadata": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "license_profile": {
+          "$ref": "#/$defs/LicenseProfile"
+        }
+      }
+    },
+
+    "LicenseProfile": {
+      "type": "object",
+      "required": ["presets"],
+      "additionalProperties": false,
+      "properties": {
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "view_only",
+              "view_and_summarize",
+              "reference_only",
+              "custom"
+            ]
+          }
+        }
+      }
+    },
+
+    "Safety": {
+      "type": "object",
+      "required": ["safe_lines", "danger_lines"],
+      "additionalProperties": false,
+      "properties": {
+        "safe_lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "danger_lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "PrototypeScope": {
+      "type": "object",
+      "required": ["v0_1_minimum", "excluded"],
+      "additionalProperties": false,
+      "properties": {
+        "v0_1_minimum": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "Roadmap": {
+      "type": "object",
+      "required": [
+        "next_step_1",
+        "next_step_2",
+        "next_step_3",
+        "next_step_4"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "next_step_1": {
+          "type": "string"
+        },
+        "next_step_2": {
+          "type": "string"
+        },
+        "next_step_3": {
+          "type": "string"
+        },
+        "next_step_4": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
