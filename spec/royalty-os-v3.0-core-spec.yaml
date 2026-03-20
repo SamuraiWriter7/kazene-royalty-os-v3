@@ -1,0 +1,215 @@
+KazeneRoyaltyOS:
+  version: "3.0"
+  status: "core-spec"
+
+  metadata:
+    name: "印税OS v3.0"
+    subtitle: "AIアクセスを許諾・ログ・分配の正規循環へ変換する権利処理OS"
+    purpose:
+      - "AIによる著作物アクセスを正規ルートに載せる"
+      - "権利者への透明な対価還元を実現する"
+      - "無断利用ではなく管理可能な循環を形成する"
+    design_policy:
+      - "Qコインは内部会計単位であり金融商品ではない"
+      - "AIは利用者または契約主体の代理エージェントとして動作する"
+      - "主役は権利処理OSでありコインは補助指標である"
+
+  compliance:
+    japan:
+      financial:
+        policy:
+          - "非換金"
+          - "非譲渡"
+          - "外部ウォレット不可"
+          - "法定通貨交換不可"
+          - "第三者間送付不可"
+        note: "暗号資産・電子決済手段・前払式支払手段の重い論点を避けるため、閉鎖型内部ポイントとして設計する"
+      copyright:
+        policy:
+          - "許諾ベースアクセス"
+          - "代理エージェントモデル"
+          - "全行動ログ保存"
+          - "再学習可否の明示"
+        note: "AIと著作権の整理に合わせ、法・技術・契約の組み合わせで運用する"
+    eu:
+      ai_act:
+        policy:
+          - "透明性重視"
+          - "著作権方針との整合"
+          - "生成コンテンツの説明可能性確保"
+        note: "将来の越境連携を見据えた互換的設計"
+
+  principles:
+    - id: "A"
+      title: "代理原則"
+      desc: "AIは独立読者ではなく利用者または契約主体の代理としてアクセスする"
+    - id: "B"
+      title: "非金融原則"
+      desc: "Qコインは内部会計単位であり通貨・投資商品・決済手段ではない"
+    - id: "C"
+      title: "透明性原則"
+      desc: "すべてのアクセスは監査可能なログとして保存される"
+    - id: "D"
+      title: "還元原則"
+      desc: "利用ログに基づいて著者・出版社へ分配される"
+    - id: "E"
+      title: "最小循環原則"
+      desc: "v3.0では完璧性よりも納得可能な最小循環を優先する"
+
+  actors:
+    author:
+      role:
+        - "作品登録"
+        - "権限設定"
+        - "分配受領"
+    publisher:
+      role:
+        - "契約管理"
+        - "作品一括登録"
+        - "分配管理"
+    principal_user:
+      role:
+        - "AI代理利用主体"
+        - "閲覧・要約・参照の実行指示"
+    agent_proxy:
+      role:
+        - "利用者の代理として作品へアクセス"
+        - "要約・参照・引用処理を実行"
+      restriction:
+        - "単独では権限主体になれない"
+
+  layers:
+    access:
+      description: "許諾・権限管理レイヤー"
+      permissions:
+        view:
+          enabled: true
+          coeff: 1.0
+        summarize:
+          enabled: true
+          coeff: 1.5
+        quote:
+          enabled: true
+          coeff: 1.2
+        embed:
+          enabled: false
+          coeff: 1.3
+        external_response:
+          enabled: true
+          coeff: 2.0
+        retraining:
+          enabled: false
+          coeff: null
+      scope_control:
+        unit:
+          - "work"
+          - "publisher"
+          - "contract"
+        flags:
+          - "commercial_use"
+          - "noncommercial_use"
+          - "archive_only"
+          - "reference_only"
+
+    trace:
+      description: "監査ログレイヤー"
+      required_fields:
+        - "log_id"
+        - "timestamp"
+        - "agent_id"
+        - "principal_id"
+        - "work_id"
+        - "publisher_id"
+        - "action_type"
+        - "token_count"
+        - "session_id"
+        - "permission_snapshot"
+        - "result_use_type"
+      result_use_type:
+        - "internal_reference"
+        - "external_response"
+        - "analytics"
+      retention:
+        policy: "minimum_12_months"
+      audit:
+        enabled: true
+        exportable: true
+
+    royalty:
+      description: "内部ポイント計算・分配レイヤー"
+      qcoin:
+        name: "Qコイン"
+        type: "internal_accounting_unit"
+        properties:
+          exchangeable_to_fiat: false
+          transferable_between_users: false
+          external_wallet_supported: false
+          market_tradable: false
+          redeemable_as_asset: false
+      calculation:
+        base_formula: "base_rate * action_coeff * work_coeff * usage_scope_coeff"
+        defaults:
+          base_rate: 1.0
+          work_coeff: 1.0
+          usage_scope_coeff: 1.0
+      settlement:
+        monthly_formula: "total_revenue * (work_q_consumption / all_works_q_consumption)"
+        payout_method:
+          - "JPY_via_publisher"
+          - "internal_balance"
+        note: "v3.0では資金移動リスクを下げるため出版社経由清算を優先する"
+
+  work_model:
+    required_metadata:
+      - "work_id"
+      - "title"
+      - "author_id"
+      - "publisher_id"
+      - "license_profile"
+      - "created_at"
+      - "updated_at"
+    license_profile:
+      presets:
+        - "view_only"
+        - "view_and_summarize"
+        - "reference_only"
+        - "custom"
+
+  safety:
+    safe_lines:
+      - "許諾済み作品のみアクセス"
+      - "AIは代理エージェントとして動作"
+      - "全ログ保存"
+      - "再学習可否の明示"
+      - "Qコインは内部専用"
+      - "円建てまたは内部残高で清算"
+    danger_lines:
+      - "Qコインの売買"
+      - "外部送金"
+      - "ユーザー間譲渡"
+      - "無許諾再学習"
+      - "ログなし利用"
+      - "AI単独クロール"
+      - "権限未定義の外部応答"
+
+  prototype_scope:
+    v0_1_minimum:
+      - "作品登録"
+      - "ライセンス設定"
+      - "代理アクセス"
+      - "ログ生成"
+      - "Qコイン計算"
+      - "月次分配レポート"
+      - "著者ダッシュボード（簡易）"
+    excluded:
+      - "ブロックチェーン"
+      - "外部決済"
+      - "外部ウォレット"
+      - "ユーザー間送金"
+      - "リアルタイム換金"
+
+  roadmap:
+    next_step_1: "YAML仕様固定"
+    next_step_2: "JSON Schema化"
+    next_step_3: "ダミーログで分配シミュレーション"
+    next_step_4: "最小管理画面"
