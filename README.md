@@ -5,9 +5,25 @@
 印税OS v3.0 は、AIによる著作物アクセスを  
 **許諾・ログ・分配** の正規循環へ変換するための権利処理OS仕様です。
 
-本仕様は、Qコインを **非換金・非譲渡・内部会計単位** として定義し、  
-AIを利用者または契約主体の **代理エージェント** として扱うことで、  
+Kazene印税OSは、AI時代における  
+**起源の記録・代理的利用・価値還流**  
+を中核原理とする構造モデルです。
+
+This specification presents a minimal structure for combining transparency, rights-holder protection, and value return by treating AI as an **agent acting on behalf of a user or contractual entity**, and by defining Q-Coin as a **non-convertible, non-transferable internal accounting unit**.
+
+本仕様は、AIを利用者または契約主体の **代理エージェント** として扱い、  
+Qコインを **非換金・非譲渡・内部会計単位** として定義することで、  
 透明性・権利者保護・対価還元を両立する最小構造を提示します。
+
+> **Compatibility Notice**  
+> This repository may be freely used, modified, and extended.  
+> Any implementation claiming compatibility with Kazene Royalty OS must preserve **origin traceability, agency attribution, and value recirculation**.  
+> See [`LICENSE-KAZENE-ROYALTY-CORE.md`](./LICENSE-KAZENE-ROYALTY-CORE.md) for details.
+
+> **互換性注記**  
+> 本リポジトリは自由に利用・改変・拡張できます。  
+> ただし、印税OS互換を名乗る実装は **起源追跡性・代理属性・価値還流性** を保持しなければなりません。  
+> 詳細は [`LICENSE-KAZENE-ROYALTY-CORE.md`](./LICENSE-KAZENE-ROYALTY-CORE.md) を参照してください。
 
 ---
 
